@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>StudentServlet</servlet-name>
+        <servlet-class>one.servlets.StudentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TeacherServlet</servlet-name>
+        <servlet-class>one.servlets.TeacherServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CourseServlet</servlet-name>
+        <servlet-class>one.servlets.CourseServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StudentServlet</servlet-name>
+        <url-pattern>/studentServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TeacherServlet</servlet-name>
+        <url-pattern>/teacherServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CourseServlet</servlet-name>
+        <url-pattern>/courseServlet</url-pattern>
+    </servlet-mapping>
+    <!-- Define two security roles -->
+    <security-role>
+        <description>Administrator</description>
+        <role-name>administrator</role-name>
+    </security-role>
+    <security-role>
+        <description>Teacher</description>
+        <role-name>teacher</role-name>
+    </security-role>
+    
+    <security-constraint>
+        <!-- Restrict access to all files in the /admin folder -->
+        <web-resource-collection>
+            <web-resource-name>Admin</web-resource-name>
+            <url-pattern>/admin/*</url-pattern>
+        </web-resource-collection>
+        <!-- Authorize the administrator role -->
+        <auth-constraint>
+            <role-name>administrator</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <!-- Restrict access to all files in the /teacher folder -->
+        <web-resource-collection>
+            <web-resource-name>Teacher</web-resource-name>
+            <url-pattern>/teacher/*</url-pattern>
+        </web-resource-collection>
+        <!-- Authorize the teacher role -->
+        <auth-constraint>
+            <role-name>teacher</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <!-- Use form-based authentication -->
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/login.jsp</form-login-page>
+            <form-error-page>/login_error.jsp</form-error-page>
+        </form-login-config>
+    </login-config>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+</web-app>

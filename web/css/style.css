@@ -1,0 +1,163 @@
+body {
+    margin: 0;
+    font-family: Gill, Helvetica, sans-serif;
+    background-color: #777;
+}
+
+.container {
+    background-color: #777;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.main {
+    background-color: #777;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    background-color: #ddd;
+    width: 95%;
+    padding: 15px;
+    margin: 0 auto;
+    min-height: 650px;
+}
+
+
+.left
+{
+/*    float:left;*/
+    background-color: #ddd;
+    width: 20%;
+    padding: 15px;
+    margin: 0 auto;
+    min-height: 600px;
+    border-right: black 1px solid;
+}
+
+.right
+{
+/*    float: right;*/
+    background-color: #ddd;
+    width: 75%;
+    padding: 15px;
+    margin: 0 auto;
+    min-height: 600px;
+}
+
+header {
+    background-color: #aaa;
+    width: 90%;
+    margin: 0 auto;
+    min-height: 10px;
+    padding: 15px;
+}
+
+footer {
+    background-color: #aaa;
+    width: 90%;
+    padding: 15px;
+    margin: 0 auto;
+    min-height: 60px;
+    color: white;
+    text-align: center;
+}
+
+ul {
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: block;
+}
+
+li {
+    /*float: left; */
+    display: block;
+}
+
+/*
+li a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #000000;
+    color: #ffffff
+}
+*/
+.active {
+    background-color: #4F6228;
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+header img
+{
+    width: 100%;
+    height: 100%;
+}
+
+
+form table {
+    width: 500px;
+    margin: 0 auto;
+}
+
+a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+a:hover {
+    background-color: #000000;
+    color: #ffffff
+}
+
+
+table
+{
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+th, td {
+    padding: 10px;
+    cell-spacing: 5px;
+    border: 1px solid black;    
+}
+
+.msg {
+    background-color: #4F6228;
+    text-align: center;
+    color: white;
+}
+
+.small
+{
+    width: 200px;
+    padding: 10px;
+}
+
+.large
+{
+    width: 400px;
+    padding: 10px;
+}
+
+.center
+{
+    text-align: center;
+}
