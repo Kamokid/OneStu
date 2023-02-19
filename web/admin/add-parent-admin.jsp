@@ -2,12 +2,6 @@
 <%@page import="one.business.*, one.dao.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%
-
-    StudentDao dao = new StudentDao();
-    
-%>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -19,12 +13,12 @@
         <div class="container">
             <div class="main">
                 <header>
-                    <div class="content" style="min-height: 1000px"> 
+                    <div class="content" style="min-height: 950px">
 
                         <!-- Content goes here -->
 
                         <!-- Menu -->
-                        <div class="left" style="min-height: 950px">
+                        <div class="left" style="min-height: 900px">
                             <br /> <br /> 
 
                             <ul>
@@ -35,7 +29,7 @@
                                     <a href="<c:url value='/admin/student.jsp'/>">Student</a>
                                 </li>
                                 <li>
-                                    <a href="<c:url value='/admin/admin.jsp'/>" class="active">Admin</a>
+                                    <a href="<c:url value='/admin/admin.jsp'/>"  class="active">Admin</a>
                                 </li>
                                 <li>
                                     <a href="#">Report</a>
@@ -49,40 +43,31 @@
 
                         <!-- main content --> 
                         <div class="right">
-
-                            <h1 class="center">Add Student</h1>
+                            <h1 class="center">Add Parent</h1>
                             <table style="width: 400px; margin: 0 auto">
                                 <tr>
-<!--                                    <td><a href="">Add Parent</a> </td>-->
+<!--                                    <td><a href="">Add Student</a> </td>-->
                                     <td><a href="<c:url value='/admin/admin.jsp'/>">Back to Admin</a> </td>
                                 </tr>
                             </table>
-                            
                             <br />
                             <%
-                                Object msg = session.getAttribute("msg");
+                                Object msg1 = session.getAttribute("msg");
                                 
-                                if(msg != null) {
-                                    out.println("<h4 class='msg'>" + msg.toString() + "</h4>");
+                                if(msg1 != null) {
+                                    out.println("<h4 class='msg'>" + msg1.toString() + "</h4>");
                                 }
                             %>
                             <br />
-                            
-                            <form action="<c:url value='/studentServlet'/>" method="post">
+                            <form action="<c:url value='/studentServlet'/>"  method="post">
                                 <table class="frmTable" style="width: 650px">
-                                    
-<!--                                    <tr>
-                                        <td><strong>Email:</strong></td>
-                                        <td><input type="email" class="large" required="" placeholder="email address" 
-                                                   name="email" id="email" /></td>
-                                    </tr>-->
                                     
                                     <tr>
                                         <td><strong>Student Id</strong></td>
-                                        <td><input type="text" class="large" required="" readonly="" value="<%= dao.getStudentId()%>"
+                                        <td><input type="text" class="large" required=""
                                                    name="studentId" id="studentId" /></td>
                                     </tr>
-
+                                    
                                     <tr>
                                         <td><strong>First Name</strong></td>
                                         <td><input type="text" class="large" required="" placeholder="First Name" 
@@ -113,13 +98,12 @@
                                                    name="postalCode" id="postalCode" /></td>
                                     </tr>
                                     
-                                    
                                     <tr>
-                                        <td><strong>DOB</strong></td>
-                                        <td><input type="date" class="large" required="" 
-                                                   name="dob" id="dob" /></td>
+                                        <td><strong>Email:</strong></td>
+                                        <td><input type="email" class="large" required="" placeholder="email address" 
+                                                   name="email" id="email" /></td>
                                     </tr>
-                                    
+                                                                 
                                     <tr>
                                         <td colspan="2" class="center">
                                             <input type="radio" name="gender" checked="" value="Male"> Male
@@ -128,45 +112,30 @@
                                     </tr>
                                     
                                     <tr>
-                                        <td><strong>Blood Group</strong></td>
-                                        <td><input type="text" class="large" required="" placeholder="Blood Group" 
-                                                   name="bloodGroup" id="bloodGroup" /></td>
-                                    </tr>
-                                    
-<!--                                    <tr>
-                                        <td><strong>Parent One Email</strong></td>
-                                        <td><input type="email" class="large" placeholder="parent@server.com" 
-                                                   name="parentOneEmail" id="parentOneEmail" value="default@onestudent.com"/></td>
-                                    </tr>-->
-                                    
-<!--                                    <tr>
-                                        <td><strong>Parent Two Email</strong></td>
-                                        <td><input type="email" class="large" placeholder="parent@server.com" 
-                                                   name="parentTwoEmail" id="parentTwoEmail" value="default@onestudent.com"/></td>
-                                    </tr>-->
-
-                                    <tr>
-                                        <td><strong>Tuition Paid</strong></td>
-                                        <td><input type="text" class="large" required="" placeholder="tuitionPaid"
-                                                   name="tuitionPaid" id="tuitionPaid" /></td>
+                                        <td><strong>Mobile Phone</strong></td>
+                                        <td><input type="text" class="large" required="" placeholder="Mobile Phone" 
+                                                   name="mobilePhone" id="mobilePhone" /></td>
                                     </tr>
                                     
                                     <tr>
-                                        <td><strong>Level</strong></td>
-                                        <td><input type="text" class="large" required="" placeholder="LevelId" 
-                                                   name="levelId"  id="LevelId"  /></td>
+                                        <td><strong>Home Phone</strong></td>
+                                        <td><input type="text" class="large" placeholder="Home Phone" 
+                                                   name="homePhone" id="homePhone" /></td>
                                     </tr>
                                     
                                     <tr>
-                                        <td><strong>Section</strong></td>
-                                        <td><input type="text" class="large" placeholder="sectionId" 
-                                                   name="sectionId" id="sectionId" value="3" /></td>
+                                        <td><strong>Business Phone</strong></td>
+                                        <td><input type="text" class="large" placeholder="Business Phone" 
+                                                   name="businessPhone" id="businessPhone" /></td>
                                     </tr>
                                     
                                     <tr>
                                         <td colspan="2" class="center">
-                                            <input type="hidden" name="type" value="add-student" />
-                                            <input type="submit" class="small" value="Save Student" />
+                                            <input type="hidden" name="type" value="add-parent" />
+                                            <input type="hidden" name="fromAddStudent" value="false" />
+                                            <input type="submit" class="small" value="Save Parent" />
+                                            <input type="button" class="small" value="Cancel" 
+                                                   onclick="window.location.href='<c:url value='/admin/admin.jsp'/>'" />
                                         </td>
                                     </tr>                
                                 </table>

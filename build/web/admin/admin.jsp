@@ -52,7 +52,7 @@
 
                         <!-- main content --> 
                         <div class="right">
-                            <h1>Administrator Functions</h1>
+                            <h1 class="center">Administrator Functions</h1>
                             <br /><br /><br /><br />
                             <%
                                 Object msg = session.getAttribute("msg");
@@ -64,25 +64,25 @@
                             %>
                             <table>
                                 <tr>
-                                    <td><a href="<c:url value='/admin/add-student.jsp'/>">Add Student</a></td>
-                                    <td><a href="<c:url value='/admin/add-teacher.jsp'/>">Add Teacher</a></td>
+                                    <td><a href="<c:url value='/admin/managestudent.jsp'/>">Manage Student</a></td>
+                                    <td><a href="<c:url value='/admin/manageteacher.jsp'/>">Manage Teacher</a></td>
                                     <td><a href="<c:url value='/admin/add-course.jsp'/>">Add Course</a></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="#">Add Section</a></td>
-                                    <td><a href="<c:url value='/admin/manage-student.jsp'/>">Manage Student</a></td>
                                     <td><a href="#">Manage Section</a></td>
+                                    <td><a href="#">Manage Attendance</a></td>
+                                    <td><a href="#">Manage Performance</a></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="#">Manage Attendance</a></td>
+                                    <td></td>
                                     <td><a href="#">Manage Fees</a></td>
-                                    <td><a href="#">Manage Performance</a></td>
+                                    <td></td>
                                 </tr>
                             </table>
 
                         </div>
                     </div>
             </div>
-        </div>
+        </div>                                 
     </body>
 </html>

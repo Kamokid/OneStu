@@ -8,20 +8,20 @@ import java.io.Serializable;
 public class Teacher extends PersonRole implements Serializable {
     
     private String email;
-    private String startDate;
     private LocalDate sDate;
    
     public Teacher(){
         super();
         this.email = "";
-        this.startDate = "";
+        sDate = LocalDate.now();
     }
     
     public Teacher(String firstName, String lastName, String address, String postalCode,
             String city, String email, String startDate){
          super(firstName, lastName, address, postalCode, city);
          this.email = email;
-         this.startDate = startDate;
+         sDate = LocalDate.parse(startDate);
+         
     }
 
     public String getEmail() {
@@ -32,12 +32,12 @@ public class Teacher extends PersonRole implements Serializable {
         this.email = email;
     }
     
-    public String getStartDate(){
-        return startDate;
+    public LocalDate getStartDate(){
+        return sDate;
     }
     
-    public void setStartDate(String startDate){
-        this.startDate = startDate;
+    public void setStartDate(LocalDate startDate){
+        this.sDate = startDate;
     }
     
 }

@@ -1,19 +1,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="one.business.*, one.dao.*" %>
-<%
-    PersonRole role = (PersonRole) session.getAttribute("role");
-
-    if (role == null || (!(role instanceof Administrator))) {
-        request.getRequestDispatcher("index.jsp").forward(request, response);
-    }
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>One Student Management System</title>
-        <link rel="stylesheet" href="css/style.css" type="text/css" />
+        <link rel="stylesheet" href="<c:url value='/css/style.css'/>" />
     </head>
     <body>
         <div class="container">
@@ -29,19 +23,19 @@
 
                             <ul>
                                 <li>
-                                    <a href="#">Home</a>
+                                    <a href="<c:url value='/admin/index.jsp'/>">Home</a>
                                 </li>
                                 <li>
-                                    <a href="student.jsp">Student</a>
+                                    <a href="<c:url value='/admin/student.jsp'/>">Student</a>
                                 </li>
                                 <li>
-                                    <a href="admin.jsp"  class="active">Admin</a>
+                                    <a href="<c:url value='/admin/admin.jsp'/>" class="active">Admin</a>
                                 </li>
                                 <li>
                                     <a href="#">Report</a>
                                 </li>
                                 <li>
-                                    <a href="logout.jsp">Logout</a>
+                                    <a href="<c:url value='/index.jsp'/>">Logout</a>
                                 </li>
                             </ul>
 
@@ -53,7 +47,7 @@
                             <h1 class="center">Add Teacher</h1>
                             <table style="width: 400px; margin: 0 auto">
                                 <tr>
-                                    <td><a href="admin.jsp">Back to Admin</a> </td>
+                                    <td><a href="<c:url value='/admin/admin.jsp'/>">Back to Admin</a> </td>
                                 </tr>
                             </table>
                             
@@ -67,19 +61,23 @@
                             %>
                             <br />
                             
-                            <form action="TeacherServlet" method="post">
+                            <form action="<c:url value='/teacherServlet'/>"  method="post">
                                 <table class="frmTable" style="width: 650px">
-                                    
+                             
                                     <tr>
-                                        <td><strong>Email:</strong></td>
-                                        <td><input type="email" class="large" required="" placeholder="email address" 
-                                                   name="email" id="email" /></td>
+                                        <td><strong>Username:</strong></td>
+                                        <td><input type="text" class="large" placeholder="username" 
+                                                   required="" name="userName" id="userName" /></td>
                                     </tr>
                                     
                                     <tr>
                                         <td><strong>Password:</strong></td>
                                         <td><input type="password" class="large" placeholder="Password" 
-                                                   required="" name="password" id="password" /></td>
+                                                   required="" name="password" id="myInput" /> <br/>
+                                            <p style="font-size:15px;">
+                                            <input type="checkbox" onclick="myFunction()">
+                                            Show Password</p></td>
+                                        
                                     </tr>
                                     
                                     <tr>
@@ -101,7 +99,25 @@
                                     </tr>
                                     
                                     <tr>
-                                        <td><strong>DOB</strong></td>
+                                        <td><strong>City</strong></td>
+                                        <td><input type="text" class="large" required="" placeholder="city" 
+                                                   name="city" id="city" /></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td><strong>Postal Code</strong></td>
+                                        <td><input type="text" class="large" required="" placeholder="postalCode" 
+                                                   name="postalCode" id="postalCode" /></td>
+                                    </tr>
+                                    
+                                     <tr>
+                                        <td><strong>Email:</strong></td>
+                                        <td><input type="email" class="large" required="" placeholder="email address" 
+                                                   name="email" id="email" /></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td><strong>Start Date</strong></td>
                                         <td><input type="date" class="large" required="" 
                                                    name="startDate" id="startDate" /></td>
                                     </tr>
@@ -118,5 +134,16 @@
                     </div>
             </div>
         </div>
+        <script>
+            function myFunction() {
+                    var x = document.getElementById("myInput");
+                    if (x.type === "password") {
+                      x.type = "text";
+                    } else {
+                      x.type = "password";
+                    }
+                  }                                                                                  
+        </script>                      
+                                
     </body>
 </html>

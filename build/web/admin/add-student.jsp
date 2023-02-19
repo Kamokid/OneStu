@@ -53,7 +53,7 @@
                             <h1 class="center">Add Student</h1>
                             <table style="width: 400px; margin: 0 auto">
                                 <tr>
-                                    <td><a href="<c:url value='/admin/add-parent.jsp'/>">Add Parent</a> </td>
+<!--                                    <td><a href="">Add Parent</a> </td>-->
                                     <td><a href="<c:url value='/admin/admin.jsp'/>">Back to Admin</a> </td>
                                 </tr>
                             </table>
@@ -79,7 +79,7 @@
                                     
                                     <tr>
                                         <td><strong>Student Id</strong></td>
-                                        <td><input type="text" class="large" required="" readonly="" value="<%= dao.getStudentId() %>"
+                                        <td><input type="text" class="large" required="" readonly="" value="<%= dao.getStudentId()%>"
                                                    name="studentId" id="studentId" /></td>
                                     </tr>
 
@@ -154,13 +154,13 @@
                                     <tr>
                                         <td><strong>Level</strong></td>
                                         <td><input type="text" class="large" required="" placeholder="LevelId" 
-                                                   name="LevelId"  id="LevelId"  /></td>
+                                                   name="levelId"  id="LevelId"  /></td>
                                     </tr>
                                     
                                     <tr>
                                         <td><strong>Section</strong></td>
                                         <td><input type="text" class="large" placeholder="sectionId" 
-                                                   name="sectionId" id="sectionId" /></td>
+                                                   name="sectionId" id="sectionId" value="3" /></td>
                                     </tr>
                                     
                                     <tr>

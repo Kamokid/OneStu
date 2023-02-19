@@ -5,18 +5,15 @@
 package one.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import one.business.Parent;
-import one.business.Student;
 import one.business.Teacher;
 import one.business.TeacherBuilder;
-import one.dao.StudentDao;
+import one.business.User;
+import one.dao.UserDao;
 import one.dao.TeacherDao;
 
 /**
@@ -84,6 +81,8 @@ public class TeacherServlet extends HttpServlet {
             throws ServletException, IOException {
         
 
+        String userName = request.getParameter("userName");
+        String password =request.getParameter("password");
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String address = request.getParameter("address");
@@ -97,23 +96,35 @@ public class TeacherServlet extends HttpServlet {
                 .setLastName(lastName).setAddress(address).setCity(city).setPostalCode(postalCode)
                 .setStartDate(startDate).createPerson();
         TeacherDao dao = new TeacherDao();
+        
+        User user = new User(userName, password);
+        
+        UserDao userDao = new UserDao();
 
         HttpSession session = request.getSession(true);
 
         // if email already exit
         if (dao.isExist(email)) {
             session.setAttribute("msg", "Email already in Use");
-            request.getRequestDispatcher("add-teacher.jsp").forward(request, response);
+            request.getRequestDispatcher("admin/add-teacher.jsp").forward(request, response);
+        }
+        
+        // if email already exit
+        if (userDao.isExist(userName)) {
+            session.setAttribute("msg", "User Name already in Use");
+            request.getRequestDispatcher("admin/add-teacher.jsp").forward(request, response);
+        } else{
+            userDao.addUser(user);
         }
 
         // add student
-        if (dao.addTeacher(teacher)) {
+        if (dao.addTeacher(teacher,userName)) {
             session.setAttribute("msg", "Teacher Data has been saved to database");
         } else {
             session.setAttribute("msg", "Teacher data is not saved into database");
         }
         
-        request.getRequestDispatcher("add-teacher.jsp").forward(request, response);
+        request.getRequestDispatcher("admin/add-teacher.jsp").forward(request, response);
         
     }
     
@@ -135,15 +146,9 @@ public class TeacherServlet extends HttpServlet {
         String email = request.getParameter("email");
         String startDate = request.getParameter("startDate");
         
-        Teacher teacher = new Teacher();
-
-        teacher.getPerson().setFirstName(firstName);
-        teacher.getPerson().setLastName(lastName);
-        teacher.getPerson().setAddress(address);
-        teacher.getPerson().setCity(city);
-        teacher.getPerson().setPostalCode(postalCode);
-        teacher.setEmail(email);
-        teacher.setStartDate(startDate);
+        Teacher teacher = new TeacherBuilder().setFirstName(firstName).setLastName(lastName)
+                .setAddress(address).setCity(city).setPostalCode(postalCode).setEmail(email)
+                .setStartDate(startDate).createPerson();
        
         
         TeacherDao dao = new TeacherDao();

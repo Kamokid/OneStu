@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import one.business.Person;
 import one.business.Teacher;
-import one.business.Teacher;
 import one.business.TeacherBuilder;
 
 /**
@@ -22,9 +21,10 @@ public class TeacherDao {
      * will add the information into both the table tblPersion and tblTeacher. 
      * 
      * @param teacher to be saved
+     * @param userName to be saved
      * @return true if added, false otherwise
      */
-    public boolean addTeacher(Teacher teacher) {
+    public boolean addTeacher(Teacher teacher, String userName) {
         boolean result = false; 
         int personId = 0;
         
@@ -44,13 +44,14 @@ public class TeacherDao {
                 personId = dao.getPersonId(teacher.getPerson());
 
                 // prepare statement
-                String query = "INSERT INTO tblTeacher VALUES(?, ?)";
+                String query = "INSERT INTO tblTeacher VALUES(?, ?, ?, ?)";
                 // set parameters
                 try (PreparedStatement stmt = conn.prepareStatement(query)) {
                     // set parameters
                     stmt.setString(1, teacher.getEmail());
                     stmt.setDate(2, Date.valueOf(teacher.getStartDate()));
                     stmt.setInt(3, personId);
+                    stmt.setString(4, userName);
                     
                     int inserted = stmt.executeUpdate();
                     

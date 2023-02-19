@@ -37,7 +37,7 @@ public class Student extends PersonRole implements Serializable {
         super(firstName, lastName, address, postalCode, city);
         this.studentId = studentId;
         this.gender = gender;
-        dOfBirth = LocalDate.parse(this.dateOfBirth = dateOfBirth);
+        dOfBirth = LocalDate.parse(dateOfBirth);
         this.bloodGroup = bloodGroup;
         this.tuitionPaid = new BigDecimal(tuitionPaid);
         this.levelId = levelId;

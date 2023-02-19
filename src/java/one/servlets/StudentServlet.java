@@ -100,10 +100,11 @@ public class StudentServlet extends HttpServlet {
         // add student
         if (dao.addStudent(student)) {
             session.setAttribute("msg", "Student Data has been saved to database");
-            request.getRequestDispatcher("add-student.jsp").forward(request, response);
+            session.setAttribute("studentId", studentId);
+            request.getRequestDispatcher("admin/add-parent.jsp").forward(request, response);
         } else {
             session.setAttribute("msg", "Student data is not saved into database");
-            request.getRequestDispatcher("add-student.jsp").forward(request, response);
+            request.getRequestDispatcher("admin/add-student.jsp").forward(request, response);
         }
     }
 
@@ -257,6 +258,7 @@ public class StudentServlet extends HttpServlet {
         String homePhone = request.getParameter("homePhone");
         String mobilePhone = request.getParameter("mobilePhone");
         String businessPhone = request.getParameter("businessPhone");
+        String fromAddStudent = request.getParameter("fromAddStudent");
 
         Parent parent = new ParentBuilder().setEmail(email).setFirstName(firstName)
                 .setLastName(lastName).setAddress(address).setCity(city)
@@ -270,16 +272,24 @@ public class StudentServlet extends HttpServlet {
         // if email already exit
         if (dao.isExist(email)) {
             session.setAttribute("msg", "Email already in Use");
-            request.getRequestDispatcher("add-parent.jsp").forward(request, response);
+            if (fromAddStudent.equalsIgnoreCase("true")){
+                   request.getRequestDispatcher("admin/add-parent.jsp").forward(request, response);
+             }else{
+                   request.getRequestDispatcher("admin/add-parent-admin.jsp").forward(request, response);
+             }   
         }
 
         // add parent
         if (dao.addParent(parent) && dao.attachToStudent(Integer.parseInt(studentId), email)) {
-            session.setAttribute("msg", "Parent Data has been saved to database");
-            request.getRequestDispatcher("add-parent.jsp").forward(request, response);
+            if (fromAddStudent.equalsIgnoreCase("true")){
+                   request.getRequestDispatcher("admin/add-parent.jsp").forward(request, response);
+             }else{
+                   request.getRequestDispatcher("admin/add-parent-admin.jsp").forward(request, response);
+             }   
+            session.setAttribute("msg1", "Parent Data has been saved to database");          
         } else {
-            session.setAttribute("msg", "Parent data is not saved into database");
-            request.getRequestDispatcher("add-parent.jsp").forward(request, response);
+            session.setAttribute("msg1", "Parent data is not saved into database");
+            request.getRequestDispatcher("admin/add-parent.jsp").forward(request, response);
         }
     }
 

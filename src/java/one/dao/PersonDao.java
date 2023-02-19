@@ -31,7 +31,8 @@ public class PersonDao {
             Connection conn = DBConnection.open();
             
             // prepare statement
-            String query = "INSERT INTO tblPerson VALUES(?, ?, ?, ?, ?)";
+            String query = "INSERT INTO tblPerson (FirstName, LastName, Address,"
+                    + " City, PostalCode) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(query);
             
             // set parameters
