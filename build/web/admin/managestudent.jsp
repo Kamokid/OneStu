@@ -69,7 +69,7 @@
                                 </tr>
                                 <tr>
                                     <td><a href="<c:url value='/admin/add-parent-admin.jsp'/>">Add Parent</a></td>
-                                    <td><a href="#">Delete Student</a></td>
+                                    <td><a href="<c:url value='/admin/deletestudent.jsp'/>">Delete Student</a></td>
                                 </tr>
                             </table>
 

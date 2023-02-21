@@ -13,6 +13,7 @@ import one.business.Student;
 import one.business.StudentBuilder;
 import one.business.Attendance;
 import one.business.Registration;
+import one.business.Fees;
 import one.dao.StudentDao;
 import one.dao.UtilityDao;
 
@@ -62,13 +63,19 @@ public class StudentServlet extends HttpServlet {
             System.out.println("Looking for load");
         } else if (type.equalsIgnoreCase("get-student-edit")) {
             loadStudent(request, response, type);
+        } else if (type.equalsIgnoreCase("get-student-delete")) {
+            loadStudent(request, response, type);
         } else if(type.equalsIgnoreCase("update-student")) {
             updateStudent(request, response);
         } else if(type.equalsIgnoreCase("update-attendance")) {
             updateAttendance(request, response);
         } else if(type.equalsIgnoreCase("update-grade")) {
             updatePerformance(request, response);
-        }      
+        } else if(type.equalsIgnoreCase("update-fees")) {
+            updateFees(request, response);
+        } else if(type.equalsIgnoreCase("delete-student")) {
+            deleteStudent(request, response);
+        }            
         
         
         
@@ -164,6 +171,8 @@ public class StudentServlet extends HttpServlet {
         
         UtilityDao utd = new UtilityDao();
         Attendance attendance = utd.getAttendance(studentId);
+        Fees fees = utd.getFee(studentId);
+        
         
         List<Registration> registration = utd.getRegistration(studentId);
         Registration r1 = null;
@@ -180,6 +189,7 @@ public class StudentServlet extends HttpServlet {
         session.setAttribute("student", student);
 //        session.setAttribute("parentOne", one);
 //        session.setAttribute("parentTwo", two);
+        session.setAttribute("fees",fees);
         session.setAttribute("attendance", attendance);
         session.setAttribute("r1", r1);
         session.setAttribute("r2", r2);
@@ -198,6 +208,9 @@ public class StudentServlet extends HttpServlet {
         } else if (type.equalsIgnoreCase("get-student-edit")) {
             session.removeAttribute("msg");
             request.getRequestDispatcher("admin/update-student.jsp").forward(request, response);
+        } else if (type.equalsIgnoreCase("get-student-delete")) {
+            session.removeAttribute("msg");
+            request.getRequestDispatcher("admin/delete-student.jsp").forward(request, response);
         }
 
     }
@@ -243,6 +256,28 @@ public class StudentServlet extends HttpServlet {
         } else {
             session.setAttribute("msg", "Student data is not been updated in the database");
             request.getRequestDispatcher("admin/update-student.jsp").forward(request, response);
+        }
+    }
+    
+    // Delete Student 
+    private void deleteStudent(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+  
+        HttpSession session = request.getSession(true);    
+        
+        Student student = (Student) session.getAttribute("student");
+        
+        String studentId = student.getStudentId();
+        
+        StudentDao dao = new StudentDao();
+        // delete student
+        if (dao.deleteStudent(studentId)) {
+            session.removeAttribute("student");
+            session.setAttribute("msg", "Student Data has been deleted from the database");
+            request.getRequestDispatcher("admin/delete-student.jsp").forward(request, response);
+        } else {
+            session.setAttribute("msg", "Student Data has not been deleted from the database");
+            request.getRequestDispatcher("admin/delete-student.jsp").forward(request, response);
         }
     }
     
@@ -352,7 +387,35 @@ public class StudentServlet extends HttpServlet {
         request.getRequestDispatcher("admin/update-performance.jsp").forward(request, response);
         
     }
-
+  // Update Fees
+    private void updateFees(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        double tuitionPaid = Double.parseDouble(request.getParameter("tuitionPaid"));   
+        
+        HttpSession session = request.getSession(true);
+        
+        Fees fees = new Fees();
+        
+        Student student = (Student) session.getAttribute("student");
+        
+        String studentId = student.getStudentId();
+        
+        UtilityDao dao = new UtilityDao();
+        
+        // update attendance
+        if (dao.updateFee(studentId, tuitionPaid)) {
+            fees = dao.getFee(studentId);
+            session.removeAttribute("fees");
+            session.setAttribute("fees", fees);
+            session.setAttribute("msg", "Student Data has been updated in the database");
+            request.getRequestDispatcher("admin/update-fees.jsp").forward(request, response);
+        } else {
+            session.setAttribute("msg", "Student data is not been updated in the database");
+            request.getRequestDispatcher("admin/update-fees.jsp").forward(request, response);
+        }
+    }
+    
 
     // Save Parent data
     private void saveParent(HttpServletRequest request, HttpServletResponse response)

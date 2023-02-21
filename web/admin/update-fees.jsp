@@ -52,9 +52,9 @@
                             <table>
                                 <tr>
                                     <td><a href="<c:url value='/admin/update-student.jsp'/>">Personal Info</a></td>
-                                    <td><a href="<c:url value='/admin/update-attendance.jsp'/>" class="active">Attendance</a></td>
+                                    <td><a href="<c:url value='/admin/update-attendance.jsp'/>" >Attendance</a></td>
                                     <td><a href="<c:url value='/admin/update-performance.jsp'/>">Performance</a></td>
-                                    <td><a href="<c:url value='/admin/update-fees.jsp'/>" >Fees</a></td>
+                                    <td><a href="<c:url value='/admin/update-fees.jsp'/>" class="active">Fees</a></td>
                                 </tr>
                             </table>
                          
@@ -86,21 +86,21 @@
                                 </tr>
                                 
                                 <tr>
-                                        <td><strong>Days Present</strong></td>
-                                        <td><input type="text" class="large" required="" placeholder="Days Present" 
-                                                   name="daysPresent"  id="daysPresent"  value="${attendance.getPresentDays()}"  /></td>
+                                        <td><strong>Tuition Paid</strong></td>
+                                        <td><input type="text" class="large" required="" placeholder="Tuition Paid" 
+                                                   name="tuitionPaid"  id="tuitionPaid"  value="${fees.getTuitionPaid()}"  /></td>
                                 </tr>
                                     
                                 <tr>
-                                        <td><strong>Days Absent</strong></td>
-                                        <td><input type="text" class="large" required="" placeholder="Days Absent" 
-                                                   name="daysAbsent" id="daysAbsent"  value="${attendance.getAbsentDays()}" /></td>
+                                        <td><strong>Tuition</strong></td>
+                                        <td><input type="text" class="large" required="" readonly=""  placeholder="Tuition" 
+                                                   name="tuition" id="tuition"  value="${fees.getTuition()}" /></td>
                                 </tr>
                                 
                                 <tr>
                                         <td colspan="2" class="center">
-                                            <input type="hidden" name="type" value="update-attendance" />
-                                            <input type="submit" class="small" value="Update Attendance" />
+                                            <input type="hidden" name="type" value="update-fees" />
+                                            <input type="submit" class="small" value="Update Fees" />
                                         </td>
                                 </tr>   
                                 
@@ -112,4 +112,5 @@
         </div>
     </body>
 </html>
+
 

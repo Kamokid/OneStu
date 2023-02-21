@@ -2,15 +2,6 @@
 <%@page import="one.business.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%
-    
-    Object from = session.getAttribute("servlet");
-    
-    if(from == null || !from.equals("servlet")) {
-        session.removeAttribute("msg");
-    }
-%>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -38,7 +29,7 @@
                                     <a href="<c:url value='/admin/student.jsp'/>">Student</a>
                                 </li>
                                 <li>
-                                    <a href="<c:url value='/admin/admin.jsp'/>" class="active">Admin</a>
+                                    <a href="<c:url value='/admin/admin.jsp'/>"  class="active">Admin</a>
                                 </li>
                                 <li>
                                     <a href="#">Report</a>
@@ -52,26 +43,32 @@
 
                         <!-- main content --> 
                         <div class="right">
-                            <h1 class="center">Manage Student</h1>
+                            <h1 class="center">Delete Student</h1>
                             <br /><br /><br /><br />
                             <%
                                 Object msg = session.getAttribute("msg");
-
-                                if (msg != null) {
+                                
+                                if(msg != null) {
                                     out.println("<h4 class='msg'>" + msg.toString() + "</h4>");
                                 }
+                            %>    
+                            <form action="<c:url value='/studentServlet'/>" method="post">
+                                <table>
 
-                            %>
-                            <table>
-                                <tr>
-                                    <td><a href="<c:url value='/admin/add-student.jsp'/>">Add Student</a></td>
-                                    <td><a href="<c:url value='/admin/manage-student.jsp'/>">Modify Student</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="<c:url value='/admin/add-parent-admin.jsp'/>">Add Parent</a></td>
-                                    <td><a href="<c:url value='/admin/deletestudent.jsp'/>">Delete Student</a></td>
-                                </tr>
-                            </table>
+                                    <tr>
+                                        <td class="center" style="border: 0px">
+                                            <input type="text" class="large" required=""
+                                                   placeholder="Student Id" name="studentId" id="studentId" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="center"  style="border: 0px;">
+                                            <input type="hidden" name="type" value="get-student-delete" />
+                                            <input style="background-color: #aaa; padding: 10px" type="submit" class="small" value="Enter" />
+                                        </td>
+                                    </tr>               
+
+                                </table>
+                            </form>
 
                         </div>
                     </div>

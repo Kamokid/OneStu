@@ -13,7 +13,7 @@ public class DBConnection {
     private static final String URL = "jdbc:mysql://localhost/";
     private static final String USER = "root";
     private static final String PASSWORD = "CST2355Database";
-    private static final String DBNAME = "studb";
+    private static final String DBNAME = "studentdb";
 
     // Connection handler
     private static Connection connection;

@@ -186,7 +186,7 @@ public class StudentDao {
 
                 // prepare statement
                 String query = "UPDATE tblStudent SET DOB=?, Gender=?, BloodGroup=?,"
-                        + "TuitionPaid=?, LevelId=?, SectionId =? where StudentId=?";
+                        + "TuitionPaid=?, LevelId=?, SectionId =? where StudentId=? AND Visible = 'true' ";
                 PreparedStatement stmt = conn.prepareStatement(query);
 
                 // set parameters
@@ -206,6 +206,47 @@ public class StudentDao {
             stmt.close();
             DBConnection.close();
             }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        return result; 
+    }
+    
+     /**
+     * Function to delete/hide an existing student, Return true if the student
+     * is updated or false. 
+     * 
+     * @param studentId to update
+     * @return true if updated
+     */
+    public boolean deleteStudent(String studentId) {
+        boolean result = false; 
+  
+        try {
+            
+                
+                // Add specific Data
+                
+                // get connection
+                Connection conn = DBConnection.open();
+
+                // prepare statement
+                String query = "UPDATE tblStudent SET Visible = 'false' where StudentId=? ";
+                PreparedStatement stmt = conn.prepareStatement(query);
+
+                // set parameters
+                stmt.setString(1, studentId);
+                
+
+                int inserted = stmt.executeUpdate();
+
+                result = inserted >= 1;
+            
+            stmt.close();
+            DBConnection.close();
+            
             
         } catch(Exception e) {
             e.printStackTrace();
@@ -269,7 +310,7 @@ public class StudentDao {
             Connection conn = DBConnection.open();
             
             // prepare statement
-            String query = "SELECT StudentId FROM tblStudent";
+            String query = "SELECT StudentId FROM tblStudent ";
             PreparedStatement stmt = conn.prepareStatement(query);
             
             // Get result set
@@ -313,7 +354,7 @@ public class StudentDao {
             Connection conn = DBConnection.open();
             
             // prepare statement
-            String query = "SELECT * FROM tblStudent where StudentId=?";
+            String query = "SELECT * FROM tblStudent where StudentId=? AND Visible = 'true' ";
             PreparedStatement stmt = conn.prepareStatement(query);
             
             stmt.setString(1, studentId);
@@ -375,7 +416,7 @@ public class StudentDao {
                     + "INNER JOIN tblstudent_has_tblparent USING(StudentId) "
                     + "INNER JOIN tblparent USING(Email) "
                     + "INNER JOIN tblperson ON tblparent.PersonId = tblperson.PersonId "
-                    + "WHERE StudentId = ? ";
+                    + "WHERE StudentId = ? AND tblstudent.Visible = 'true' ";
             
             PreparedStatement stmt = conn.prepareStatement(query);
             

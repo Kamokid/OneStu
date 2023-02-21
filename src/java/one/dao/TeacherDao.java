@@ -78,7 +78,7 @@ public class TeacherDao {
             Connection conn = DBConnection.open();
             
             // prepare statement
-            String query = "SELECT * FROM tblTeacher where Email=?";
+            String query = "SELECT * FROM tblTeacher where Email=? AND Visible = 'true' ";
             PreparedStatement stmt = conn.prepareStatement(query);
             
             stmt.setString(1, email);
@@ -125,7 +125,7 @@ public class TeacherDao {
             Connection conn = DBConnection.open();
             
             // prepare statement
-            String query = "SELECT Email FROM tblteacher where Email=?";
+            String query = "SELECT Email FROM tblteacher where Email=? ";
             PreparedStatement stmt = conn.prepareStatement(query);
             
             // set parameters
@@ -177,7 +177,7 @@ public class TeacherDao {
 
                 // prepare statement
                 String query = "UPDATE tblteacher SET Email=?, StartDate=?"
-                        + "where PersonId=?";
+                        + "where PersonId=? AND Visible = 'true' ";
                 PreparedStatement stmt = conn.prepareStatement(query);
 
                 // set parameters
@@ -209,7 +209,7 @@ public class TeacherDao {
             Connection conn = DBConnection.open();
             
             // prepare statement
-            String query = "SELECT * FROM tblTeacher";
+            String query = "SELECT * FROM tblTeacher WHERE Visible = 'true' ";
             PreparedStatement stmt = conn.prepareStatement(query);
             
             

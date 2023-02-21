@@ -9,9 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import one.business.Attendance;
 import one.business.Registration;
+import one.business.Fees;
 import java.util.ArrayList;
 import java.util.List;
-import one.business.Parent;
+
 /**
  *
  * @author Khalil
@@ -88,6 +89,47 @@ public class UtilityDao {
                 student.setGrade(grade);
                 student.setRemarks(remarks);
                 student.setCourseId(courseId);
+            }
+            stmt.close();
+            rs.close();
+            conn.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        return student;
+    }
+    
+    // Function to get fee by studentID
+    public Fees getFee(String studentId) {
+                
+        Fees student = new Fees();
+        try {
+                       
+            // get connection
+            Connection conn = DBConnection.open();
+            
+            // prepare statement
+            String query = "SELECT TuitionPaid, Tuition FROM tblstudent "
+                    + "INNER JOIN tblgrade ON tblgrade.LevelId = tblstudent.LevelId  "
+                    + "WHERE tblstudent.StudentId=? ";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            
+            stmt.setString(1, studentId);
+            
+            // Get result set
+            ResultSet rs = stmt.executeQuery();
+            
+            // read data if exist
+            while(rs.next()) {
+                
+                
+                String tuitionPaid = rs.getString(1);
+                String tuition = rs.getString(2);
+                
+                
+                student.setTuitionPaid(tuitionPaid);
+                student.setTuition(tuition);          
             }
             stmt.close();
             rs.close();
@@ -186,6 +228,45 @@ public class UtilityDao {
         return result; 
     }
     
+         /**
+     * Function to update an existing Fee, Return true if the 
+     * update is successful or false if not. 
+     * 
+     * @param studentId to find entry
+     * @return true if updated
+     */
+    public boolean updateFee(String studentId, double tuitionPaid) {
+        boolean result = false; 
+
+        try {
+                // Add specific Data
+                
+                // get connection
+                Connection conn = DBConnection.open();
+
+                // prepare statement
+                String query = "UPDATE tblstudent SET TuitionPaid=? "
+                        + " where StudentId=? ";
+                PreparedStatement stmt = conn.prepareStatement(query);
+
+                // set parameters
+                stmt.setDouble(1, tuitionPaid);
+                stmt.setString(2, studentId);
+
+                int inserted = stmt.executeUpdate();
+
+                result = inserted >= 1;
+            
+            stmt.close();
+            DBConnection.close();
+            
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        return result; 
+    }
     
     // Function to get attendance by given Id
     public List<Registration> getRegistration(String studentId) {

@@ -48,7 +48,7 @@
                                     <td><a href="<c:url value='/admin/update-student.jsp'/>" class="active">Personal Info</a></td>
                                     <td><a href="<c:url value='/admin/update-attendance.jsp'/>">Attendance</a></td>
                                     <td><a href="<c:url value='/admin/update-performance.jsp'/>">Performance</a></td>
-                                    <td><a href="#">Fees</a></td>
+                                    <td><a href="<c:url value='/admin/update-fees.jsp'/>" >Fees</a></td>
                                 </tr>
                             </table>
 <!--                            <h1 class="center">Update Student</h1>-->
@@ -138,7 +138,7 @@
                                     
                                     <tr>
                                         <td><strong>Tuition Paid</strong></td>
-                                        <td><input type="text" class="large" required="" placeholder="tuitionPaid"
+                                        <td><input type="text" class="large" required="" readonly="" placeholder="tuitionPaid"
                                                    name="tuitionPaid" id="tuitionPaid" value="${student.getTuitionPaid()}" /></td>
                                     </tr>
                                     

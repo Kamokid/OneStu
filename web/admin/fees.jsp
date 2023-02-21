@@ -1,6 +1,6 @@
 <%-- 
-    Document   : performance
-    Created on : Feb 17, 2023, 10:59:28 PM
+    Document   : attendance
+    Created on : Feb 17, 2023, 10:36:14 PM
     Author     : Khalil
 --%>
 
@@ -43,6 +43,7 @@
 
     Object obj8 = session.getAttribute("r4");
     one.business.Registration reg3 = (one.business.Registration) obj8;
+
 %>
 
 <!DOCTYPE html>
@@ -89,36 +90,32 @@
                             <table>
                                 <tr>
                                     <td><a href="<c:url value='/admin/personal-info.jsp'/>">Personal Info</a></td>
-                                    <td><a href="<c:url value='/admin/attendance.jsp'/>">Attendance</a></td>
-                                    <td><a href="<c:url value='/admin/performance.jsp'/>" class="active">Performance</a></td>
-                                    <td><a href="<c:url value='/admin/fees.jsp'/>">Fees</a></td>
+                                    <td><a href="<c:url value='/admin/attendance.jsp'/>" >Attendance</a></td>
+                                    <td><a href="<c:url value='/admin/performance.jsp'/>">Performance</a></td>
+                                    <td><a href="<c:url value='/admin/fees.jsp'/>" class="active">Fees</a></td>
                                 </tr>
                             </table>
                             <br /><br />
                             
                             <table>
                                 <tr>
-                                    <th>Attendance Info</th>
+                                    <th>Tuition Info</th>
                                 </tr>
                                 <tr>
-                                    <td>Student ID: <%= student.getStudentId() %></td>
+                                    <td>Student ID: ${student.getStudentId()}</td>
                                 </tr>
                                 
                                 <tr>
-                                    <td>Name: <%= student.getPerson().getFirstName() %> <%= student.getPerson().getLastName() %></td>
-                                </tr>     
-                                <tr>
-                                    <td>Science: <%= reg.getGrade()%></td>
+                                    <td>Name: ${student.getPerson().getFirstName()} ${student.getPerson().getLastName()}</td>
                                 </tr>
+                                
                                 <tr>
-                                    <td>Math: <%= reg1.getGrade()%></td>
+                                    <td>Tuition: ${fees.getTuition()}</td>
                                 </tr>
+                                
                                 <tr>
-                                    <td>English: <%= reg2.getGrade()%></td>
-                                </tr> 
-                                <tr>
-                                    <td>Social Studies: <%= reg3.getGrade()%></td>
-                                </tr>  
+                                    <td>Tuition Paid: ${fees.getTuitionPaid()}</td>
+                                </tr>                  
                             </table>
 
                         </div>
@@ -127,3 +124,4 @@
         </div>
     </body>
 </html>
+
