@@ -1,19 +1,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="one.business.*" %>
-<%
-    PersonRole role = (PersonRole) session.getAttribute("role");
-
-    if (role == null || (!(role instanceof Administrator))) {
-        request.getRequestDispatcher("index.jsp").forward(request, response);
-    }
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>One Student Management System</title>
-        <link rel="stylesheet" href="css/style.css" type="text/css" />
+        <link rel="stylesheet" href="<c:url value='/css/style.css'/>" />
     </head>
     <body>
         <div class="container">
@@ -29,19 +23,19 @@
 
                             <ul>
                                 <li>
-                                    <a href="#">Home</a>
+                                    <a href="<c:url value='/admin/index.jsp'/>">Home</a>
                                 </li>
                                 <li>
-                                    <a href="student.jsp">Student</a>
+                                    <a href="<c:url value='/admin/student.jsp'/>">Student</a>
                                 </li>
                                 <li>
-                                    <a href="admin.jsp"  class="active">Admin</a>
+                                    <a href="<c:url value='/admin/admin.jsp'/>"  class="active">Admin</a>
                                 </li>
                                 <li>
                                     <a href="#">Report</a>
                                 </li>
                                 <li>
-                                    <a href="logout.jsp">Logout</a>
+                                    <a href="<c:url value='/index.jsp'/>">Logout</a>
                                 </li>
                             </ul>
 
@@ -49,7 +43,7 @@
 
                         <!-- main content --> 
                         <div class="right">
-                            <h1>Manage Student</h1>
+                            <h1 class="center">Manage Student</h1>
                             <br /><br /><br /><br />
                             <%
                                 Object msg = session.getAttribute("msg");
@@ -58,12 +52,13 @@
                                     out.println("<h4 class='msg'>" + msg.toString() + "</h4>");
                                 }
                             %>    
-                            <form action="StudentServlet" method="post">
+                            <form action="<c:url value='/studentServlet'/>" method="post">
                                 <table>
 
                                     <tr>
-                                        <td class="center" style="border: 0px"><input type="text" class="large" required="" placeholder="Student Id" 
-                                                                                      name="studentId" id="studentId" /></td>
+                                        <td class="center" style="border: 0px">
+                                            <input type="text" class="large" required=""
+                                                   placeholder="Student Id" name="studentId" id="studentId" /></td>
                                     </tr>
                                     <tr>
                                         <td class="center"  style="border: 0px;">

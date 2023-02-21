@@ -153,13 +153,13 @@
                                     
                                     <tr>
                                         <td><strong>Level</strong></td>
-                                        <td><input type="text" class="large" required="" placeholder="LevelId" 
-                                                   name="levelId"  id="LevelId"  /></td>
+                                        <td><input type="text" class="large" required="" placeholder="Level" 
+                                                   name="levelId"  id="levelId"  /></td>
                                     </tr>
                                     
                                     <tr>
                                         <td><strong>Section</strong></td>
-                                        <td><input type="text" class="large" placeholder="sectionId" 
+                                        <td><input type="text" class="large" placeholder="Section" 
                                                    name="sectionId" id="sectionId" value="3" /></td>
                                     </tr>
                                     

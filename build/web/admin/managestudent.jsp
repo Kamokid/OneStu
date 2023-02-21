@@ -65,7 +65,7 @@
                             <table>
                                 <tr>
                                     <td><a href="<c:url value='/admin/add-student.jsp'/>">Add Student</a></td>
-                                    <td><a href="#">Modify Student</a></td>
+                                    <td><a href="<c:url value='/admin/manage-student.jsp'/>">Modify Student</a></td>
                                 </tr>
                                 <tr>
                                     <td><a href="<c:url value='/admin/add-parent-admin.jsp'/>">Add Parent</a></td>

@@ -45,7 +45,7 @@
                                     <td><a href="<c:url value='/teacher/student.jsp'/>">Personal Info</a></td>
                                     <td><a href="<c:url value='/teacher/student.jsp'/>">Attendance</a></td>
                                     <td><a href="<c:url value='/teacher/student.jsp'/>">Performance</a></td>
-                                    <td><a href="<c:url value='/teacher/student.jsp'/>">Fees</a></td>
+<!--                                    <td><a href="<c:url value='/teacher/student.jsp'/>">Fees</a></td>-->
                                 </tr>
                             </table>
                             <br /><br /><br /><br /> 

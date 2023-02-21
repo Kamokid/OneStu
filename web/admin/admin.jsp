@@ -66,18 +66,20 @@
                                 <tr>
                                     <td><a href="<c:url value='/admin/managestudent.jsp'/>">Manage Student</a></td>
                                     <td><a href="<c:url value='/admin/manageteacher.jsp'/>">Manage Teacher</a></td>
-                                    <td><a href="<c:url value='/admin/add-course.jsp'/>">Add Course</a></td>
+                                    <td><a href="#">Add Course</a></td>
                                 </tr>
                                 <tr>
+                                    <td></td>
                                     <td><a href="#">Manage Section</a></td>
-                                    <td><a href="#">Manage Attendance</a></td>
-                                    <td><a href="#">Manage Performance</a></td>
+                                    <td></td>
+<!--                                <td><a href="#">Manage Attendance</a></td>
+                                    <td><a href="#">Manage Performance</a></td>-->
                                 </tr>
-                                <tr>
+<!--                                <tr>
                                     <td></td>
                                     <td><a href="#">Manage Fees</a></td>
                                     <td></td>
-                                </tr>
+                                </tr>-->
                             </table>
 
                         </div>

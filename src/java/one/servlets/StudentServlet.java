@@ -64,7 +64,14 @@ public class StudentServlet extends HttpServlet {
             loadStudent(request, response, type);
         } else if(type.equalsIgnoreCase("update-student")) {
             updateStudent(request, response);
-        }
+        } else if(type.equalsIgnoreCase("update-attendance")) {
+            updateAttendance(request, response);
+        } else if(type.equalsIgnoreCase("update-grade")) {
+            updatePerformance(request, response);
+        }      
+        
+        
+        
     }
 
     // Save Student Data
@@ -127,9 +134,9 @@ public class StudentServlet extends HttpServlet {
         if (student == null) {
             session.setAttribute("msg", "Student with given ID: " + studentId + " doesn't exist");
             if (type.equalsIgnoreCase("get-student")) {
-                request.getRequestDispatcher("student.jsp").forward(request, response);
+                request.getRequestDispatcher("admin/student.jsp").forward(request, response);
             } else if (type.equalsIgnoreCase("get-student-edit")) {
-                request.getRequestDispatcher("manage-student.jsp").forward(request, response);
+                request.getRequestDispatcher("admin/manage-student.jsp").forward(request, response);
             }
         }
 
@@ -154,7 +161,6 @@ public class StudentServlet extends HttpServlet {
             }
   
         }
-       
         
         UtilityDao utd = new UtilityDao();
         Attendance attendance = utd.getAttendance(studentId);
@@ -164,13 +170,13 @@ public class StudentServlet extends HttpServlet {
         Registration r2 = null;
         Registration r3 = null;
         Registration r4 = null;
-        
+
          if(!registration.isEmpty()){
             r1 = registration.get(0);
             r2 = registration.get(1);
             r3 = registration.get(2);
             r4 = registration.get(3);
-         }
+         
         session.setAttribute("student", student);
 //        session.setAttribute("parentOne", one);
 //        session.setAttribute("parentTwo", two);
@@ -191,11 +197,12 @@ public class StudentServlet extends HttpServlet {
              }
         } else if (type.equalsIgnoreCase("get-student-edit")) {
             session.removeAttribute("msg");
-            request.getRequestDispatcher("update-student.jsp").forward(request, response);
+            request.getRequestDispatcher("admin/update-student.jsp").forward(request, response);
         }
 
     }
-    
+         
+    }
     // Update Student 
     private void updateStudent(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -206,42 +213,146 @@ public class StudentServlet extends HttpServlet {
         String address = request.getParameter("address");
         String city = request.getParameter("city");
         String postalCode = request.getParameter("postalCode");
-        String id = request.getParameter("studentId");
+        String studentId = request.getParameter("studentId");
         String dob = request.getParameter("dob");
         String gender = request.getParameter("gender");
         String bloodGroup = request.getParameter("bloodGroup");
         String tuitionPaid = request.getParameter("tuitionPaid");
         int levelId = Integer.parseInt(request.getParameter("levelId"));
+        int sectionId = Integer.parseInt(request.getParameter("sectionId"));
         
-        Student student = new Student();
         
-        student.getPerson().setFirstName(firstName);
-        student.getPerson().setLastName(lastName);
-        student.getPerson().setAddress(address);
-        student.getPerson().setCity(city);
-        student.getPerson().setPostalCode(postalCode);
-        student.setStudentId(id);
-        student.setDateOfBirth(dob);
-        student.setGender(gender);
-        student.setBloodGroup(bloodGroup);
-        student.setTuitionPaid(tuitionPaid);
-        student.setLevelId(levelId);
-        
+        Student student = new StudentBuilder().setFirstName(firstName).setLastName(lastName).setAddress(address)
+                .setCity(city).setPostalCode(postalCode)
+                .setStudentId(studentId).setGender(gender).setDateOfBirth(dob)
+                .setBloodGroup(bloodGroup).setTuitionPaid(tuitionPaid)
+                .setLevelId(levelId).setSectionId(sectionId)
+                .createPerson();
+      
         StudentDao dao = new StudentDao();
-        HttpSession session = request.getSession(true);
         
-        // add student
+        HttpSession session = request.getSession(true);     
+        
+        // update student
         if (dao.updateStudent(student)) {
-            student = dao.getStudent(id);
+            student = dao.getStudent(studentId);
             session.removeAttribute("student");
             session.setAttribute("student", student);
             session.setAttribute("msg", "Student Data has been updated in the database");
-            request.getRequestDispatcher("update-student.jsp").forward(request, response);
+            request.getRequestDispatcher("admin/update-student.jsp").forward(request, response);
         } else {
             session.setAttribute("msg", "Student data is not been updated in the database");
-            request.getRequestDispatcher("update-student.jsp").forward(request, response);
+            request.getRequestDispatcher("admin/update-student.jsp").forward(request, response);
         }
     }
+    
+     // Update Attendance 
+    private void updateAttendance(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        int presentDays = Integer.parseInt(request.getParameter("daysPresent"));
+        int absentDays = Integer.parseInt(request.getParameter("daysAbsent"));     
+        
+        Attendance attendance = new Attendance(absentDays, presentDays);
+        
+        HttpSession session = request.getSession(true);
+        
+        Student student = (Student) session.getAttribute("student");
+        
+        String studentId = student.getStudentId();
+        
+        UtilityDao dao = new UtilityDao();
+        
+        // update attendance
+        if (dao.updateAttendance(attendance, studentId)) {
+            attendance = dao.getAttendance(studentId);
+            session.removeAttribute("attendance");
+            session.setAttribute("attendance", attendance);
+            session.setAttribute("msg", "Student Data has been updated in the database");
+            request.getRequestDispatcher("admin/update-attendance.jsp").forward(request, response);
+        } else {
+            session.setAttribute("msg", "Student data is not been updated in the database");
+            request.getRequestDispatcher("admin/update-attendance.jsp").forward(request, response);
+        }
+    }
+    
+    // Update Performance
+    private void updatePerformance(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        double science = Double.parseDouble(request.getParameter("science"));
+        double math = Double.parseDouble(request.getParameter("math"));    
+        double english = Double.parseDouble(request.getParameter("english"));
+        double socialStudies = Double.parseDouble(request.getParameter("socialStudies"));
+        
+       
+        HttpSession session = request.getSession(true);
+        
+        Registration r1 = (Registration) session.getAttribute("r1");
+        Registration r2 = (Registration) session.getAttribute("r2");
+        Registration r3 = (Registration) session.getAttribute("r3");
+        Registration r4 = (Registration) session.getAttribute("r4");
+        
+        
+        UtilityDao dao = new UtilityDao();
+        
+        // Update Registration
+        if(science != r1.getGrade()){   
+                if (dao.updateRegistration(r1.getStudentId(), r1.getCourseId(), science)) {
+                    r1 = dao.getRegistration(r1.getStudentId(),r1.getCourseId());
+                    session.removeAttribute("r1");
+                    session.setAttribute("r1", r1);
+                    request.setAttribute("msg1", "Science grade has been updated in the database");
+//                    request.getRequestDispatcher("admin/update-attendance.jsp").forward(request, response);
+                } else {
+                    request.setAttribute("msg1", "Science grade has not been updated in the database");
+//                    request.getRequestDispatcher("admin/update-attendance.jsp").forward(request, response);
+                }
+        }
+          
+        if(math != r2.getGrade()){   
+                if (dao.updateRegistration(r2.getStudentId(), r2.getCourseId(), math)) {
+                    r2 = dao.getRegistration(r2.getStudentId(),r2.getCourseId());
+                    session.removeAttribute("r2");
+                    session.setAttribute("r2", r2);
+                    request.setAttribute("msg2", "Math grade has been updated in the database");
+//                    request.getRequestDispatcher("admin/update-performance.jsp").forward(request, response);
+                } else {
+                    request.setAttribute("msg2", "Math grade has not been updated in the database");
+//                    request.getRequestDispatcher("admin/update-performance.jsp").forward(request, response);
+                }
+        }
+        
+          if(english != r3.getGrade()){   
+                if (dao.updateRegistration(r3.getStudentId(), r3.getCourseId(), english)) {
+                    r3 = dao.getRegistration(r3.getStudentId(),r3.getCourseId());
+                    session.removeAttribute("r3");
+                    session.setAttribute("r3", r3);
+                    request.setAttribute("msg3", "English grade has been updated in the database");
+//                    request.getRequestDispatcher("admin/update-performance.jsp").forward(request, response);
+                } else {
+                    request.setAttribute("msg3", "English grade has not been updated in the database");
+//                    request.getRequestDispatcher("admin/update-performance.jsp").forward(request, response);
+                }
+        }
+        
+        if(socialStudies != r4.getGrade()){   
+                if (dao.updateRegistration(r4.getStudentId(), r4.getCourseId(), socialStudies)) {
+                    r4 = dao.getRegistration(r4.getStudentId(),r4.getCourseId());
+                    session.removeAttribute("r4");
+                    session.setAttribute("r4", r4);
+                    request.setAttribute("msg4", "Social Studies grade has been updated in the database");
+//                    request.getRequestDispatcher("admin/update-performance.jsp").forward(request, response);
+                } else {
+                    request.setAttribute("msg4", "Social Studies grade has not been updated in the database");
+//                    request.getRequestDispatcher("admin/update-performance.jsp").forward(request, response);
+                }
+        }
+        
+        request.getRequestDispatcher("admin/update-performance.jsp").forward(request, response);
+        
+    }
+
 
     // Save Parent data
     private void saveParent(HttpServletRequest request, HttpServletResponse response)

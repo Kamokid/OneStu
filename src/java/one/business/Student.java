@@ -1,6 +1,6 @@
 package one.business;
 
-import java.util.*;
+
 import java.time.LocalDate;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -12,7 +12,7 @@ public class Student extends PersonRole implements Serializable {
     
     private String studentId;
     private String gender;
-    private String dateOfBirth;
+//    private String dateOfBirth;
     private LocalDate dOfBirth;
     private String bloodGroup;
     private BigDecimal tuitionPaid;
@@ -60,13 +60,13 @@ public class Student extends PersonRole implements Serializable {
         this.gender = gender;
     }
 
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
+//    public String getDateOfBirth() {
+//        return dateOfBirth;
+//    }
+//
+//    public void setDateOfBirth(String dateOfBirth) {
+//        this.dateOfBirth = dateOfBirth;
+//    }
 
     public LocalDate getdOfBirth() {
         return dOfBirth;
@@ -114,7 +114,7 @@ public class Student extends PersonRole implements Serializable {
                 + "%n%s: %s", 
                 super.toString(),
                 "Student ID", studentId,
-        "Gender", gender, "Date of Birth", dateOfBirth,
+        "Gender", gender, "Date of Birth", dOfBirth,
         "Blood Group", bloodGroup, 
         "Tuition Paid", tuitionPaid);
     }
